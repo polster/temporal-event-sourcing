@@ -1,0 +1,55 @@
+= Temporal event sourcing - Hands-on
+:toc:
+
+== Introduction
+
+=== What's this?
+
+This hands-on project explores temporal event sourcing with Spring Boot, Kafka, PostgreSQL.
+
+=== Prerequisites
+
+* Java 21
+* Maven 3.8 or higher
+* make, direnv
+* Docker, Docker Compose
+
+=== Infrastructure
+
+|===
+| Resource | Description
+
+| http://localhost:16543/browser[]
+| PostgreSQL Admin UI
+
+| http://localhost:8081/ui/artifacts[]
+| Schema registry UI
+
+| http://localhost:4588/int/swagger-ui/index.html[]
+| Swagger UI
+
+| http://localhost:8083[]
+| Kafka UI
+|===
+
+== Get started
+
+=== Initial setup
+
+* Clone the repository
+* Provision the infrastructure:
+[source,bash]
+----
+make docker-infra-up
+# Provision the DB with Flyway
+make database-migrate
+# Upload message schemas to schema registry
+make schema-provision
+----
+* Build and run the app:
+[source,bash]
+----
+mvn clean install
+mvn spring-boot:run -pl services/campaign-data-service
+----
+* Check the link:http://localhost:4588/int/swagger-ui/index.html[API documentation]

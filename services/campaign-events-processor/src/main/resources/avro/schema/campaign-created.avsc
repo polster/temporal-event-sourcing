@@ -1,0 +1,26 @@
+{
+  "name": "CampaignCreated",
+  "namespace": "io.dietschi.edu.temporal_event_sourcing.schema.avro",
+  "type": "record",
+  "doc": "Avro Schema definition for campaign created event",
+  "fields" : [ {
+    "name" : "campaignId",
+    "type" : "string"
+  }, {
+    "name" : "name",
+    "type" : "string"
+  }, {
+    "name" : "startDate",
+    "type" : {
+      "type": "int",
+      "logicalType": "date"
+    }
+  }, {
+    "name" : "endDate",
+    "type" : {
+      "type": "int",
+      "logicalType": "date"
+    }
+  }
+  ]
+}

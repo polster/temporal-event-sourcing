@@ -1,0 +1,29 @@
+{
+  "name": "ViewsCompleted",
+  "namespace": "io.dietschi.edu.temporal_event_sourcing.schema.avro",
+  "type": "record",
+  "doc": "Avro Schema definition for views completed event",
+  "fields" : [ {
+    "name" : "campaignId",
+    "type" : "string"
+  }, {
+    "name" : "lineItemId",
+    "type" : "int"
+  }, {
+    "name" : "completedViews",
+    "type" : "int"
+  }, {
+    "name" : "validFrom",
+    "type": {
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  }, {
+    "name" : "validTo",
+    "type": {
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  }
+  ]
+}

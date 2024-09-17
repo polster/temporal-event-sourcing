@@ -9,9 +9,10 @@ import java.util.UUID
 @Repository
 interface PostgresViewsRepository: JpaRepository<ViewsEntity, Long> {
 
-    @Query("SELECT campaignId, SUM(completedViews) AS completedViews FROM completed_views " +
-            "WHERE campaignId = :campaignId " +
-            "AND viewingWindowEnd <= :asOfDate " +
-            "GROUP BY campaignId")
-    fun findByCampaignIdAndAsOfDate(campaignId: UUID, asOfDate: LocalDateTime): ViewsEntity?
+    @Query("SELECT new io.dietschi.edu.temporal_event_sourcing.campaign_data_service.adapters.outbound.persistence.views.ViewsAsOf(c.campaignId, c.lineItemId, SUM(c.completedViews)) FROM completed_views AS c " +
+            "WHERE c.campaignId = :campaignId " +
+            "AND c.viewingWindowEnd <= :asOfDate " +
+            "GROUP BY c.campaignId, c.lineItemId")
+    fun findByCampaignIdAndAsOfDate(campaignId: UUID, asOfDate: LocalDateTime): List<ViewsAsOf>
+
 }

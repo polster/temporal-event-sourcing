@@ -5,5 +5,5 @@ import java.util.UUID
 data class ViewsDto(
     val campaignId: UUID,
     val lineItemId: UUID,
-    val completedViews: Int
+    val completedViews: Long
 )

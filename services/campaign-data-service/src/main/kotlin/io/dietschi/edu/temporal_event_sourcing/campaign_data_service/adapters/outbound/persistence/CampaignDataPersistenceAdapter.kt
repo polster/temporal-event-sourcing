@@ -26,6 +26,5 @@ class CampaignDataPersistenceAdapter(
 
     override fun queryViews(campaignId: UUID, asOfDate: LocalDateTime): List<Views> =
         postgresViewsRepository.findByCampaignIdAndAsOfDate(campaignId, asOfDate)
-            ?.let { listOf(it.toDomain()) }
-            ?: emptyList()
+            .map { it.toDomain() }
 }

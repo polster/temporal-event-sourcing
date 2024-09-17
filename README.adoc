@@ -46,10 +46,17 @@ make database-migrate
 # Upload message schemas to schema registry
 make schema-provision
 ----
-* Build and run the app:
+* Build and verify:
 [source,bash]
 ----
 mvn clean install
-mvn spring-boot:run -pl services/campaign-data-service
 ----
-* Check the link:http://localhost:4588/int/swagger-ui/index.html[API documentation]
+
+=== Demo
+
+* Via IDE or CLI, start all the available services: link:services/[]
+** Pay attention to first start the link:services/campaign-events-processor/[] and then the link:services/campaign-events-generator/[]
+* Check logs and verify there are no errors
+* Connect to the DB using link:http://localhost:16543/browser[pgadmin] and check if the materialized data has been written
+* Open link:http://localhost:4588/int/swagger-ui/index.html[Swagger-UI] in your favourite browser
+* Start querying

@@ -8,22 +8,23 @@
     "type" : "string"
   }, {
     "name" : "lineItemId",
-    "type" : "int"
+    "type" : "string"
   }, {
     "name" : "completedViews",
     "type" : "int"
   }, {
-    "name" : "validFrom",
+    "name": "viewingWindowStart",
     "type": {
       "type": "long",
-      "logicalType": "timestamp-millis"
+      "logicalType": "local-timestamp-millis"
     }
-  }, {
-    "name" : "validTo",
-    "type": {
-      "type": "long",
-      "logicalType": "timestamp-millis"
+  },
+    {
+      "name": "viewingWindowEnd",
+      "type": {
+        "type": "long",
+        "logicalType": "local-timestamp-millis"
+      }
     }
-  }
   ]
 }

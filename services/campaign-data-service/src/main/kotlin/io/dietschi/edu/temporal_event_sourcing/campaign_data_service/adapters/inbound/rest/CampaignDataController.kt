@@ -2,6 +2,8 @@ package io.dietschi.edu.temporal_event_sourcing.campaign_data_service.adapters.i
 
 import io.dietschi.edu.temporal_event_sourcing.campaign_data_service.adapters.inbound.toDto
 import io.dietschi.edu.temporal_event_sourcing.campaign_data_service.application.port.inbound.GetCampaignsUseCase
+import io.dietschi.edu.temporal_event_sourcing.campaign_data_service.application.port.inbound.GetViewsUseCase
+import io.dietschi.edu.temporal_event_sourcing.campaign_data_service.application.port.inbound.Query
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -14,7 +16,8 @@ import java.util.UUID
 @RestController
 @RequestMapping("/ext/v1/campaigns")
 class CampaignDataController(
-    private val getCampaignsUseCase: GetCampaignsUseCase
+    private val getCampaignsUseCase: GetCampaignsUseCase,
+    private val getViewsUseCase: GetViewsUseCase
 ) {
 
     @GetMapping("/")
@@ -32,9 +35,9 @@ class CampaignDataController(
     @GetMapping("/{id}/completed-views")
     fun queryCompletedViews(
         @PathVariable id: UUID,
-        @RequestParam(required = true) startDate: LocalDateTime,
-        @RequestParam(required = true) endDate: LocalDateTime): ResponseEntity<List<CompletedView>> {
+        @RequestParam(required = true) asOfDate: LocalDateTime): ResponseEntity<List<ViewsDto>> {
 
-        throw NotImplementedError("Not implemented")
+        val query = Query(campaignId = id, asOfDate = asOfDate)
+        return ResponseEntity.ok(getViewsUseCase.getViews(query).map { it.toDto() })
     }
 }

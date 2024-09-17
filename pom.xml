@@ -23,6 +23,7 @@
         <apache-avro.version>1.12.0</apache-avro.version>
         <springdoc.version>2.2.0</springdoc.version>
         <flyway.version>10.17.3</flyway.version>
+        <kafka-streams.version>3.6.1</kafka-streams.version>
         <postgresql.version>42.7.4</postgresql.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <apicurio.version>2.4.4.Final</apicurio.version>
@@ -33,6 +34,7 @@
     <modules>
         <module>services/campaign-events-processor</module>
         <module>services/campaign-data-service</module>
+        <module>services/campaign-events-generator</module>
     </modules>
 
     <dependencyManagement>
@@ -48,6 +50,11 @@
             </dependency>
 
             <!-- Kafka protocol -->
+            <dependency>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka-streams</artifactId>
+                <version>${kafka-streams.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.apache.avro</groupId>
                 <artifactId>avro-compiler</artifactId>

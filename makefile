@@ -19,7 +19,9 @@ database-migrate:
         -Dflyway.configFiles=./etc/flyway/flyway.conf
 
 schema-provision:
-	mvn clean install -Pschema
+	mvn clean package \
+	    -pl ./services/campaign-events-processor \
+	    -Pschema
 
 docker-infra-status:
 	docker ps -a \

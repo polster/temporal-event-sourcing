@@ -10,25 +10,17 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>campaign-events-processor</artifactId>
+    <artifactId>campaign-events-generator</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>campaign-events-processor</name>
-    <description>Processes campaign events (materialization).</description>
+    <name>campaign-events-generator</name>
+    <description>Generates campaign events for testing.</description>
 
     <dependencies>
 
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.kafka</groupId>
@@ -57,12 +49,6 @@
             <artifactId>apicurio-registry-serdes-avro-serde</artifactId>
         </dependency>
 
-        <!-- Swagger -->
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-        </dependency>
-
         <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -79,7 +65,6 @@
 
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
-        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
 
         <plugins>
             <plugin>
@@ -90,6 +75,16 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
                     <args>
                         <arg>-Xjsr305=strict</arg>
@@ -120,6 +115,36 @@
             </plugin>
 
             <plugin>
+                <groupId>io.apicurio</groupId>
+                <artifactId>apicurio-registry-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>download</goal>
+                        </goals>
+                        <configuration>
+                            <registryUrl>http://localhost:8081/apis/registry/v2</registryUrl>
+                            <artifacts>
+                                <artifact>
+                                    <groupId>default</groupId>
+                                    <artifactId>local.exchange.event.campaigns.1</artifactId>
+                                    <file>${project.build.directory}/classes/campaign-created.avsc</file>
+                                    <overwrite>true</overwrite>
+                                </artifact>
+                                <artifact>
+                                    <groupId>default</groupId>
+                                    <artifactId>local.exchange.event.views.1</artifactId>
+                                    <file>${project.build.directory}/classes/views-completed.avsc</file>
+                                    <overwrite>true</overwrite>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.avro</groupId>
                 <artifactId>avro-maven-plugin</artifactId>
                 <executions>
@@ -129,7 +154,7 @@
                             <goal>schema</goal>
                         </goals>
                         <configuration>
-                            <sourceDirectory>${project.basedir}/src/main/resources/avro/schema</sourceDirectory>
+                            <sourceDirectory>${project.build.directory}/classes</sourceDirectory>
                             <includes>
                                 <include>**/*.avsc</include>
                             </includes>
@@ -141,46 +166,5 @@
 
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>schema</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>io.apicurio</groupId>
-                        <artifactId>apicurio-registry-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>generate-sources</phase>
-                                <goals>
-                                    <goal>register</goal>
-                                </goals>
-                                <configuration>
-                                    <registryUrl>http://localhost:8081/apis/registry/v2</registryUrl>
-                                    <artifacts>
-                                        <artifact>
-                                            <groupId>default</groupId>
-                                            <artifactId>local.exchange.event.campaigns.1</artifactId>
-                                            <file>${project.basedir}/src/main/resources/avro/schema/campaign-created.avsc</file>
-                                            <type>AVRO</type>
-                                            <ifExists>RETURN_OR_UPDATE</ifExists>
-                                        </artifact>
-                                        <artifact>
-                                            <groupId>default</groupId>
-                                            <artifactId>local.exchange.event.views.1</artifactId>
-                                            <file>${project.basedir}/src/main/resources/avro/schema/views-completed.avsc</file>
-                                            <type>AVRO</type>
-                                            <ifExists>RETURN_OR_UPDATE</ifExists>
-                                        </artifact>
-                                    </artifacts>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 </project>

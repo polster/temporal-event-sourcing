@@ -1,4 +1,4 @@
-package io.dietschi.edu.temporal_event_sourcing.campaign_data_service.adapters.outbound.persistence
+package io.dietschi.edu.temporal_event_sourcing.campaign_data_service.adapters.outbound.persistence.campaign
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

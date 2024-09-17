@@ -1,7 +1,9 @@
 package io.dietschi.edu.temporal_event_sourcing.campaign_data_service.adapters.outbound
 
-import io.dietschi.edu.temporal_event_sourcing.campaign_data_service.adapters.outbound.persistence.CampaignEntity
+import io.dietschi.edu.temporal_event_sourcing.campaign_data_service.adapters.outbound.persistence.campaign.CampaignEntity
+import io.dietschi.edu.temporal_event_sourcing.campaign_data_service.adapters.outbound.persistence.views.ViewsEntity
 import io.dietschi.edu.temporal_event_sourcing.campaign_data_service.application.domain.model.Campaign
+import io.dietschi.edu.temporal_event_sourcing.campaign_data_service.application.domain.model.Views
 
 fun CampaignEntity.toDomain(): Campaign {
     return Campaign(
@@ -9,5 +11,17 @@ fun CampaignEntity.toDomain(): Campaign {
         name = name,
         startDate = startDate,
         endDate = endDate
+    )
+}
+
+fun ViewsEntity.toDomain(): Views {
+    return Views(
+        campaignId = campaignId,
+        lineItemId = lineItemId,
+        completedViews = completedViews,
+        viewingWindow = Views.ViewingWindow(
+            startDate = viewingWindowStart,
+            endDate = viewingWindowEnd
+        )
     )
 }

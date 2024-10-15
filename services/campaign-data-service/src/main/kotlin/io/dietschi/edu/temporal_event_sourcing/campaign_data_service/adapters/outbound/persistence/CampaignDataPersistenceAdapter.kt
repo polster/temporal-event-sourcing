@@ -12,8 +12,7 @@ import io.dietschi.edu.temporal_event_sourcing.campaign_data_service.application
 import io.dietschi.edu.temporal_event_sourcing.campaign_data_service.common.exception.ResourceNotFoundException
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
-import java.util.UUID
-import java.util.stream.Collectors
+import java.util.*
 
 @Component
 class CampaignDataPersistenceAdapter(
@@ -24,6 +23,11 @@ class CampaignDataPersistenceAdapter(
 
     override fun queryCampaigns(): List<Campaign> =
         postgresCampaignRepository.findAll().map { it.toDomain() }
+
+    override fun queryCampaignWithViews(id: UUID): CampaignWithViews =
+        postgresCampaignWithViewsRepository.findByCampaignId(id)
+            .let(::groupAndMap)
+            .first()
 
     override fun queryCampaign(id: UUID): Campaign =
         postgresCampaignRepository.findByCampaignId(id)?.toDomain()
@@ -39,10 +43,14 @@ class CampaignDataPersistenceAdapter(
 
         return postgresCampaignWithViewsRepository
             .findByStartDateAndEndDateAndAsOfDateCompletedViews(fromDate, toDate, asOfDateCompletedViews)
+            .let(::groupAndMap)
+    }
+
+    private fun groupAndMap(campaigns: List<CampaignWithCompletedViews>): (List<CampaignWithViews>) =
+        campaigns
             .groupBy { it.campaignId }
             .map { (campaignId, campaigns) ->
                 CampaignWithViews(campaignId, campaigns.first().name, campaigns.first().startDate, campaigns.first().endDate,
                     campaigns.map { Views(it.campaignId, it.lineItemId, it.completedViews) })
-            }
     }
 }

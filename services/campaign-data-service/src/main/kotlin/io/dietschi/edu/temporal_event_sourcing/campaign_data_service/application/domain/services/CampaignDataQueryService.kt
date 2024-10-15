@@ -16,6 +16,9 @@ class CampaignDataQueryService(
     private val queryCampaignDataPort: QueryCampaignDataPort
 ): GetCampaignsUseCase, GetViewsUseCase {
 
+    override fun getCampaignWithViews(id: UUID): CampaignWithViews =
+        queryCampaignDataPort.queryCampaignWithViews(id)
+
     override fun getCampaign(id: UUID): Campaign =
         queryCampaignDataPort.queryCampaign(id)
 

@@ -5,7 +5,9 @@
 
 === What's this?
 
-This hands-on project explores temporal event sourcing with Spring Boot, Kafka, PostgreSQL.
+This hands-on project explores temporal event sourcing with Spring Boot, Kafka, and PostgreSQL.
+
+It also offers a REST API and a separate GraphQL API, using the same event-sourced data but with a database view.
 
 === Prerequisites
 
@@ -66,3 +68,5 @@ mvn clean install
 
 * Walk-through the steps in link:#rest-api-demo[REST API demo]
 * Open link:http://localhost:4588/int/graphiql?path=/ext/v1/campaigns/graphql[GraphiQL] in your favourite browser
+* Or, import the available link:etc/postman/temporal-event-sourcing.postman_collection.json[Postman collection] into Postman
+* Start querying

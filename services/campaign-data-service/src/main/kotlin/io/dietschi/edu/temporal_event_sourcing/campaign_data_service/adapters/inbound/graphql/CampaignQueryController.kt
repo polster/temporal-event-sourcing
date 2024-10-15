@@ -8,6 +8,7 @@ import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.stereotype.Controller
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Controller
 class CampaignQueryController(
@@ -15,20 +16,13 @@ class CampaignQueryController(
 ) {
 
     @QueryMapping
-    fun campaignById(@Argument id: String): CampaignDto {
-        return CampaignDto(
-            id = id,
-            name = "Campaign",
-            startDate = LocalDateTime.now(),
-            endDate = LocalDateTime.now(),
-            views = emptyList()
-        )
-    }
+    fun campaignById(@Argument id: UUID): CampaignWithViewsDto =
+        getCampaignsUseCase.getCampaignWithViews(id).toDto()
 
     @QueryMapping
-    fun campaigns(@Argument campaignFilter: CampaignFilter,
+    fun campaignsAndViews(@Argument campaignFilter: CampaignFilter,
                   @Argument viewsFilter: ViewsFilter
-    ): List<CampaignDto> {
+    ): List<CampaignWithViewsDto> {
         val query = CampaignQuery(
             fromDate = campaignFilter.fromDate,
             toDate = campaignFilter.toDate,
@@ -36,4 +30,8 @@ class CampaignQueryController(
         )
         return getCampaignsUseCase.getCampaignsWithViews(query).map { it.toDto() }
     }
+
+    @QueryMapping
+    fun campaigns(): List<CampaignDto> =
+        getCampaignsUseCase.getCampaigns().map { it.toDto() }
 }

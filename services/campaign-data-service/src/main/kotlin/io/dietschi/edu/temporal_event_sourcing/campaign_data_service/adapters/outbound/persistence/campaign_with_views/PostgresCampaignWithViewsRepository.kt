@@ -4,9 +4,13 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
+import java.util.*
 
 @Repository
 interface PostgresCampaignWithViewsRepository : JpaRepository<CampaignWithCompletedViews, CompositeId> {
+
+    @Query("SELECT c FROM campaigns_with_completed_views AS c WHERE c.campaignId = :campaignId")
+    fun findByCampaignId(campaignId: UUID): List<CampaignWithCompletedViews>
 
     @Query("SELECT c FROM campaigns_with_completed_views AS c " +
             "WHERE c.viewingWindowEnd <= :asOfDateCompletedViews " +

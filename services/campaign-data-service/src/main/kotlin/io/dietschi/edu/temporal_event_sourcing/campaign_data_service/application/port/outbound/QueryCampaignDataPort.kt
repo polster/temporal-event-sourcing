@@ -10,6 +10,8 @@ interface QueryCampaignDataPort {
 
     fun queryCampaigns(): List<Campaign>
 
+    fun queryCampaignWithViews(id: UUID): CampaignWithViews
+
     fun queryCampaign(id: UUID): Campaign
 
     fun queryViews(campaignId: UUID, asOfDate: LocalDateTime): List<Views>

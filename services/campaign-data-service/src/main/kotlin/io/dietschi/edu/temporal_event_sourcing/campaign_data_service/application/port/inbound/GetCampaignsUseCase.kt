@@ -8,6 +8,8 @@ interface GetCampaignsUseCase {
 
     fun getCampaign(id: UUID): Campaign
 
+    fun getCampaignWithViews(id: UUID): CampaignWithViews
+
     fun getCampaigns(): List<Campaign>
 
     fun getCampaignsWithViews(campaignQuery: CampaignQuery): List<CampaignWithViews>

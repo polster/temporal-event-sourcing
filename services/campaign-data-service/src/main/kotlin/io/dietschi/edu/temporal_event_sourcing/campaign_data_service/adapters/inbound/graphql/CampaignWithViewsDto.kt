@@ -2,9 +2,10 @@ package io.dietschi.edu.temporal_event_sourcing.campaign_data_service.adapters.i
 
 import java.time.LocalDateTime
 
-data class CampaignDto(
+data class CampaignWithViewsDto(
     val id: String,
     val name: String,
     val startDate: LocalDateTime,
-    val endDate: LocalDateTime
-)
+    val endDate: LocalDateTime,
+    val views: List<ViewsDto>)
+

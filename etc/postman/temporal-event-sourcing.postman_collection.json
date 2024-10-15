@@ -1,0 +1,144 @@
+{
+	"info": {
+		"_postman_id": "fffc409b-7aa9-491a-8976-abec320d655c",
+		"name": "temporal-event-sourcing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21699788"
+	},
+	"item": [
+		{
+			"name": "campaign-data-service",
+			"item": [
+				{
+					"name": "Query campaigns",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\n    campaigns {\n        id\n        name\n        startDate\n        endDate\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4588/ext/v1/campaigns/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4588",
+							"path": [
+								"ext",
+								"v1",
+								"campaigns",
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Query campaigns with views",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\n    campaignsAndViews(\n        campaignFilter: {\n            fromDate: \"2024-10-17T00:00:00Z\"\n            toDate: \"2024-10-30T00:00:00Z\"\n        },\n        viewsFilter: {\n            asOfDate: \"2024-10-28T23:59:59Z\"\n        }\n    ) {\n        id\n        name\n        startDate\n        endDate\n        views {\n            lineItemId\n            completedViews\n        }\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4588/ext/v1/campaigns/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4588",
+							"path": [
+								"ext",
+								"v1",
+								"campaigns",
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Query campaign",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\n    campaignById(\n        id: \"f85995b7-4cf0-47c3-8c4d-18596689e343\"\n    ) {\n        id\n        name\n        startDate\n        endDate\n        views {\n            lineItemId\n            completedViews\n        }\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4588/ext/v1/campaigns/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4588",
+							"path": [
+								"ext",
+								"v1",
+								"campaigns",
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,11 +1,18 @@
 scalar DateTime
 
-type CampaignDto {
+type CampaignWithViewsDto {
     id: String!
     name: String!
     startDate: String!
     endDate: String!
     views: [ViewsDto]
+}
+
+type Campaign {
+    id: String!
+    name: String!
+    startDate: String!
+    endDate: String!
 }
 
 type ViewsDto {
@@ -23,6 +30,7 @@ input CampaignFilter {
 }
 
 type Query {
-    campaigns(campaignFilter: CampaignFilter!, viewsFilter: ViewsFilter): [CampaignDto]
-    campaignById(id: ID!): CampaignDto
+    campaignsAndViews(campaignFilter: CampaignFilter!, viewsFilter: ViewsFilter!): [CampaignWithViewsDto]
+    campaigns: [Campaign]
+    campaignById(id: ID!): CampaignWithViewsDto
 }

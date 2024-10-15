@@ -27,6 +27,7 @@
         <postgresql.version>42.7.4</postgresql.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <apicurio.version>2.4.4.Final</apicurio.version>
+        <graphql-java.version>21.0</graphql-java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -64,6 +65,13 @@
                 <groupId>io.apicurio</groupId>
                 <artifactId>apicurio-registry-serdes-avro-serde</artifactId>
                 <version>${apicurio.version}</version>
+            </dependency>
+
+            <!-- GraphQL -->
+            <dependency>
+                <groupId>com.graphql-java</groupId>
+                <artifactId>graphql-java-extended-scalars</artifactId>
+                <version>${graphql-java.version}</version>
             </dependency>
 
             <!-- Swagger -->

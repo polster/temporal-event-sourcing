@@ -1,9 +1,8 @@
 package io.dietschi.edu.temporal_event_sourcing.campaign_data_service.adapters.inbound.rest
 
-import io.dietschi.edu.temporal_event_sourcing.campaign_data_service.adapters.inbound.toDto
 import io.dietschi.edu.temporal_event_sourcing.campaign_data_service.application.port.inbound.GetCampaignsUseCase
 import io.dietschi.edu.temporal_event_sourcing.campaign_data_service.application.port.inbound.GetViewsUseCase
-import io.dietschi.edu.temporal_event_sourcing.campaign_data_service.application.port.inbound.Query
+import io.dietschi.edu.temporal_event_sourcing.campaign_data_service.application.port.inbound.ViewsQuery
 import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.ResponseEntity
@@ -37,9 +36,11 @@ class CampaignDataController(
     @GetMapping("/{id}/completed-views")
     fun queryCompletedViews(
         @PathVariable id: UUID,
-        @Schema(example = "2024-09-28T01:30:00.000") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam(required = true) asOfDate: LocalDateTime): ResponseEntity<List<ViewsDto>> {
+        @Schema(example = "2024-09-28T01:30:00.000")
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+        @RequestParam(required = true) asOfDate: LocalDateTime): ResponseEntity<List<ViewsDto>> {
 
-        val query = Query(campaignId = id, asOfDate = asOfDate)
-        return ResponseEntity.ok(getViewsUseCase.getViews(query).map { it.toDto() })
+        val viewsQuery = ViewsQuery(campaignId = id, asOfDate = asOfDate)
+        return ResponseEntity.ok(getViewsUseCase.getViews(viewsQuery).map { it.toDto() })
     }
 }

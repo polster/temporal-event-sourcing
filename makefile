@@ -16,6 +16,7 @@ docker-infra-destroy: docker-infra-down
 
 database-migrate:
 	mvn clean -N flyway:migrate \
+	    -Dflyway.validateMigrationNaming=true \
         -Dflyway.configFiles=./etc/flyway/flyway.conf
 
 schema-provision:

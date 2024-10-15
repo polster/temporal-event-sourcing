@@ -14,5 +14,4 @@ interface PostgresViewsRepository: JpaRepository<ViewsEntity, Long> {
             "AND c.viewingWindowEnd <= :asOfDate " +
             "GROUP BY c.campaignId, c.lineItemId")
     fun findByCampaignIdAndAsOfDate(campaignId: UUID, asOfDate: LocalDateTime): List<ViewsAsOf>
-
 }

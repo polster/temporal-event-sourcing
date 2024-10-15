@@ -4,5 +4,5 @@ import io.dietschi.edu.temporal_event_sourcing.campaign_data_service.application
 
 fun interface GetViewsUseCase {
 
-    fun getViews(query: Query): List<Views>
+    fun getViews(viewsQuery: ViewsQuery): List<Views>
 }

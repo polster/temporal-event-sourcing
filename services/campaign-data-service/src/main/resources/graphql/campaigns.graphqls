@@ -1,0 +1,28 @@
+scalar DateTime
+
+type CampaignDto {
+    id: String!
+    name: String!
+    startDate: String!
+    endDate: String!
+    views: [ViewsDto]
+}
+
+type ViewsDto {
+    lineItemId: String!
+    completedViews: Int!
+}
+
+input ViewsFilter {
+    asOfDate: DateTime
+}
+
+input CampaignFilter {
+    fromDate: DateTime
+    toDate: DateTime
+}
+
+type Query {
+    campaigns(campaignFilter: CampaignFilter!, viewsFilter: ViewsFilter): [CampaignDto]
+    campaignById(id: ID!): CampaignDto
+}

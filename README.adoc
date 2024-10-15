@@ -52,7 +52,8 @@ make schema-provision
 mvn clean install
 ----
 
-=== Demo
+[#rest-api-demo]
+=== Demo: REST API
 
 * Via IDE or CLI, start all the available services: link:services/[]
 ** Pay attention to first start the link:services/campaign-events-processor/[] and then the link:services/campaign-events-generator/[]
@@ -60,3 +61,8 @@ mvn clean install
 * Connect to the DB using link:http://localhost:16543/browser[pgadmin] and check if the materialized data has been written
 * Open link:http://localhost:4588/int/swagger-ui/index.html[Swagger-UI] in your favourite browser
 * Start querying
+
+=== Demo: GraphQL
+
+* Walk-through the steps in link:#rest-api-demo[REST API demo]
+* Open link:http://localhost:4588/int/graphiql?path=/ext/v1/campaigns/graphql[GraphiQL] in your favourite browser

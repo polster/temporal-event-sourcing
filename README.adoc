@@ -70,3 +70,16 @@ mvn clean install
 * Open link:http://localhost:4588/int/graphiql?path=/ext/v1/campaigns/graphql[GraphiQL] in your favourite browser
 * Or, import the available link:etc/postman/temporal-event-sourcing.postman_collection.json[Postman collection] into Postman
 * Start querying
+
+== Hints
+
+=== Spring Boot JPA and Views
+
+By intention this project uses a `view` to materialize the data. This is not to be confused with materialized views with the DBMS (ordinary views always reflect the latest data from the underlying tables, while materialized views only show the data from the last refresh).
+
+For more details, see the following resources:
+
+* link:services/campaign-data-service/src/main/kotlin/io/dietschi/edu/temporal_event_sourcing/campaign_data_service/adapters/outbound/persistence/campaign_with_views/PostgresCampaignWithViewsRepository.kt[View repository]
+* link:services/campaign-data-service/src/main/kotlin/io/dietschi/edu/temporal_event_sourcing/campaign_data_service/adapters/outbound/persistence/campaign_with_views/CampaignWithCompletedViews.kt[View entity]
+* link:services/campaign-data-service/src/main/kotlin/io/dietschi/edu/temporal_event_sourcing/campaign_data_service/adapters/outbound/persistence/campaign_with_views/CompositeId.kt[View composite ID]
+* link:etc/flyway/db/migration/V2_0_0__view.sql[View creation script]
